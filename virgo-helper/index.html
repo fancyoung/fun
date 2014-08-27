@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <style>
+        html, body {
+            width: 100%;
+            margin: 0;
+        }
+        h1 {
+            text-align: center;
+        }
+        #preview {
+            margin: 20px;
+            max-width: 100%;
+            margin-bottom: 20px;
+        }
+        #preview img {
+            width: 100%;
+        }
+        .fileupload {
+            position: relative;
+            display: block;
+            overflow: hidden;
+            margin: 20px;
+        }
+        .fileupload input {
+            position: absolute;
+            top: 0;
+            right: 0;
+            margin: 0;
+            opacity: 0;
+            -ms-filter: 'alpha(opacity=0)';
+            font-size: 200px;
+            direction: ltr;
+            cursor: pointer;
+        }
+
+        .fileupload span {
+            border: 1px solid #3498DB;
+            background-color: #3498DB;
+            color: #fff;
+            padding: 8px;
+            cursor: pointer;
+            display: block;
+            font-weight: bold;
+            font-size: 20px;
+            text-align: center;
+        }
+        p {
+            margin: 20px;
+        }
+    </style>
+    <script src="js/base64.min.js"></script>
+    <script src="js/md5.min.js"></script>
+    <script src="js/upyun.min.js"></script>
+    <title>强迫症拯救者</title>
+</head>
+<body>
+<h1>强迫症拯救者</h1>
+<p>本工具协助用户生成头像，让热心的你在日常聊天中,对强迫症及处女座朋友进行锻炼与治疗。</p>
+<p>使用方法：上传头像 > 长按图片保存 > 设置为头像</p>
+<form name="uploadForm" role="form">
+    <span class="fileupload">
+        <span>上传头像<i id="uploadProgress"></i></span>
+        <input type="file" name="file" onchange="upload()" />
+    </span>
+</form>
+<div id="preview"></div>
+<p>* 别忘了分享哟^_^</p>
+<script>
+    var el_p = document.getElementById('uploadProgress');
+    upyun.set('bucket','weixin-fun');
+    upyun.set('form_api_secret', 'Uf+6R+sJWTCotteZKk2Jb5LNSgI=');
+    upyun.on('uploading', function(progress) {
+        el_p.innerText =
+                        progress === 100 ?
+                ' 完成' :
+                ' ' + progress + '%';
+    });
+    function upload() {
+        upyun.upload('uploadForm', function(err, response, image){
+            if (err) alert(err);
+            if (image.code === 200 && image.message === 'ok') {
+                document.getElementById('preview').innerHTML = [
+                    '<img alt="" src="',
+                    image.absUrl + '!one',
+                    '" />'
+                ].join('\n');
+            }
+        });
+        return false;
+    }
+</script>
+<script type="text/javascript">
+    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F8f234ac82a3d9d7f80ba957877944d6e' type='text/javascript'%3E%3C/script%3E"));
+</script>
+</body>
+</html>
+
