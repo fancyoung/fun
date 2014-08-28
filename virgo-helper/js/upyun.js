@@ -27,7 +27,7 @@
     this.form_api_secret = '';
     this.configs = {};
     this.configs.expiration = (new Date().getTime()) + 60;
-    this.configs['save-key'] = '/{year}/{mon}/{day}/upload_'+this.md5+'{.suffix}';
+    this.configs['save-key'] = '/{year}/{mon}/{day}/upload_'+Date.now()+'{.suffix}';
     this.configs['allow-file-type'] = 'jpg,jpeg,gif,png';
   }
 
